@@ -1,6 +1,8 @@
 package kdtm.crawling;
 
 import de.l3s.boilerpipe.extractors.ArticleExtractor;
+import edu.uci.ics.crawler4j.crawler.Page;
+import edu.uci.ics.crawler4j.url.WebURL;
 
 import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
@@ -15,6 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -24,8 +27,14 @@ public class Extractor {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         //TODO: fill below
-        Path inRoot = Paths.get("");
-        Path outRoot = Paths.get("");
+        Path inRoot = Paths.get("/home/sila/projects/crawler/root");
+        Path outRoot = Paths.get("/home/sila/projects/crawler/outExtractor");
+
+
+        Rule rules = new kdtm.crawling.Rule();
+        ArrayList ruleList =  rules.getRules("/home/sila/projects/crawler/domains/rules");
+        rules = (kdtm.crawling.Rule) ruleList.get(1);
+
 
         ThreadPoolExecutor es = new ThreadPoolExecutor(3, 3, 0L, TimeUnit.MILLISECONDS, new LimitedQueue<>(3));
 
@@ -103,12 +112,16 @@ public class Extractor {
                         String text = new String(Files.readAllBytes(inFile), Charset.forName("UTF-8"));
                         text = pattern.matcher(text).replaceAll("<head><meta charset=\"UTF-8\"></head>");
                         text = ArticleExtractor.INSTANCE.getText(text);
+
 //                        text = DefaultExtractor.INSTANCE.getText(text);
 //                        text = KeepEverythingExtractor.INSTANCE.getText(text);
-                        mbw.write("#####");
-                        mbw.write(inFile.getFileName().toString());
+//
+                        mbw.write("<doc id=\"" + inFile.getFileName().toString().replace("%3A",":").replace("%2F","/") + "\" source=\""+  inDir.toString().substring(inDir.toString().indexOf("www"),inDir.toString().indexOf("/data")) + "\" crawl-date=\"" +outFile.toString().substring(outFile.toString().length()-10)+"\">");
+//                        mbw.write("#####");
+//                        mbw.write(inFile.getFileName().toString());
                         mbw.newLine();
                         mbw.write(text);
+                        mbw.write("</doc>");
                         mbw.newLine();
                         mbw.close();
                         os.write(baos.toByteArray());

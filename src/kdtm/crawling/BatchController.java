@@ -1,10 +1,14 @@
 package kdtm.crawling;
 
 import com.google.common.base.Charsets;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import sun.rmi.runtime.Log;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URI;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -41,6 +45,7 @@ public class BatchController {
                         return null;
                     }
                 }).collect(Collectors.toList());
+
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         while (!br.readLine().equalsIgnoreCase("done")) {
