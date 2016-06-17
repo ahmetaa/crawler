@@ -1,6 +1,6 @@
-SOURCE = http://www.nurturia.com.tr
+SOURCE = http://www.nurturia.com.tr/
 IGNORE-URL = people,bazaar
 
 
-SOURCE = http://www.duslerforum.org
+SOURCE = http://www.duslerforum.org/
 IGNORE-URL = uyeler

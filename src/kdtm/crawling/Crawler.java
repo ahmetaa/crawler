@@ -42,7 +42,7 @@ public class Crawler extends WebCrawler {
         int count =0;
         for (int i = 0; i < ruleList.size(); i++) {
             rules = (kdtm.crawling.Rule) ruleList.get(i);
-            if(href.contains(rules.source)) {
+            if(href.contains(rules.source) || href.contains(rules.source.replace(":", "%3a").replace("/", "%2f"))) {  //href yukarıda lowercase e çevirdiğimizden a ve f küçük
                 for(String ig : rules.ignores) {
                     if(href.contains(ig))
                         count++;

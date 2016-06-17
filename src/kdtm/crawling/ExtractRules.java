@@ -16,7 +16,8 @@ public class ExtractRules {
 //        System.out.println(ruleList.size());
         for (int i = 0; i < ruleList.size(); i++) {
             rules = (kdtm.crawling.Rule) ruleList.get(i);
-            if(href.contains(rules.source)) {
+            String s = rules.source.replace(":", "%3A").replace("/", "%2F");
+            if(href.contains(rules.source) || href.contains(rules.source.replace(":", "%3A").replace("/", "%2F"))) {
                 for(String ig : rules.ignores) {
                     if(href.contains(ig))
                         c++;
