@@ -26,10 +26,10 @@ public class Rule {
                 if(!sCurrentLine.equalsIgnoreCase("")){
                 if (i % 2 == 0) {
                     rule = new Rule();
-                    rule.source = sCurrentLine.substring(16);
+                    rule.source = sCurrentLine.substring(sCurrentLine.indexOf("=")+1).trim();
                 }
                 if (i % 2 == 1) {
-                    sCurrentLine = sCurrentLine.substring(13);
+                    sCurrentLine = sCurrentLine.substring(sCurrentLine.indexOf("=")+1).trim();
                     ignoreList = Arrays.asList(sCurrentLine.split(","));
                     rule.ignores = new HashSet<>(ignoreList);
                     ruleList.add(rule);
