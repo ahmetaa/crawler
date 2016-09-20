@@ -1,21 +1,10 @@
 package kdtm.crawling;
 
 import de.l3s.boilerpipe.extractors.ArticleExtractor;
-import edu.uci.ics.crawler4j.crawler.Page;
-import edu.uci.ics.crawler4j.url.WebURL;
 
-import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
+import java.io.*;
 import java.nio.charset.Charset;
-import java.nio.file.DirectoryStream;
-import java.nio.file.FileVisitResult;
-import java.nio.file.FileVisitor;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -26,14 +15,17 @@ import java.util.regex.Pattern;
 public class Extractor {
 
     public static void main(String[] args) throws IOException, InterruptedException {
+
+        if (args.length < 2) {
+            throw new IllegalArgumentException("At least two parameter [crawl-root] [extraction-root] is necessary");
+        }
         //TODO: fill below
-        Path inRoot = Paths.get("/home/sila/projects/crawler/root");
-        Path outRoot = Paths.get("/home/sila/projects/crawler/outExtractor");
+        Path inRoot = Paths.get(args[0]);
+        Path outRoot = Paths.get(args[1]);
 
-
-        Rule rules = new kdtm.crawling.Rule();
-        ArrayList ruleList =  rules.getRules("/home/sila/projects/crawler/domains/rules");
-        rules = (kdtm.crawling.Rule) ruleList.get(1);
+        Rule rules = new Rule();
+        ArrayList ruleList = rules.getRules("domains/rules");
+        rules = (Rule) ruleList.get(1);
 
 
         ThreadPoolExecutor es = new ThreadPoolExecutor(3, 3, 0L, TimeUnit.MILLISECONDS, new LimitedQueue<>(3));
@@ -116,7 +108,7 @@ public class Extractor {
 //                        text = DefaultExtractor.INSTANCE.getText(text);
 //                        text = KeepEverythingExtractor.INSTANCE.getText(text);
 //
-                        mbw.write("<doc id=\"" + inFile.getFileName().toString().replace("%3A",":").replace("%2F","/") + "\" source=\""+  inDir.toString().substring(inDir.toString().indexOf("www"),inDir.toString().indexOf("/data")) + "\" crawl-date=\"" +outFile.toString().substring(outFile.toString().length()-10)+"\">");
+                        mbw.write("<doc id=\"" + inFile.getFileName().toString().replace("%3A", ":").replace("%2F", "/") + "\" source=\"" + inDir.toString().substring(inDir.toString().indexOf("www"), inDir.toString().indexOf("/data")) + "\" crawl-date=\"" + outFile.toString().substring(outFile.toString().length() - 10) + "\">");
 //                        mbw.write("#####");
 //                        mbw.write(inFile.getFileName().toString());
                         mbw.newLine();
