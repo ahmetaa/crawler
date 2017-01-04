@@ -1,0 +1,447 @@
+# I-: page id regexp
+# I+: page is accepted if id matches to this pattern.
+# L: Line regular expression. if matches, line is ignored.
+# P: Page regexp
+# W: word regexp. all matches will be replaced with space.
+# E: Extractor type
+
+global
+
+I-:video
+I-:galeri
+I-:foto-haber
+I-:webtv
+
+L:[<]|[>]
+L:\[[0-9]+\]$
+L:\([0-9]+\)$
+L:http
+
+test
+
+L:^[ ]*[0-9]+\.[0-9]+%
+
+www.aksam.com.tr
+
+www.cnnturk.com
+
+www.cumhuriyet.com.tr
+
+www.dunya.com
+E:ARTICLE
+
+www.ensonhaber.com
+
+E:ARTICLE
+L:önce$
+
+www.haberturk.com
+
+www.hurriyet.com.tr
+
+www.iha.com.tr
+
+E:ARTICLE
+L:\d{2}:\d{2}$
+L:[<]|[>]
+
+www.karar.com
+
+www.milliyet.com.tr
+
+E:ARTICLE
+L: Haberleri -
+L:\( permalink \)
+
+www.ntv.com.tr
+
+www.posta.com.tr
+
+www.sabah.com.tr
+
+I-:namaz-vakitleri
+E:ARTICLE
+
+www.sozcu.com.tr
+
+t24.com.tr
+
+www.zaytung.com
+I-:store\.zaytung\.com
+I-:user
+
+www.bilim.org
+
+forum.antoloji.com
+
+E:EVERYTHING
+I-:uye
+# `nedir` sayfalarında iyi veri var ama bazı kelimeler eklerinden bölünmüş
+# I-:nedir
+I-:gruplar
+P:(c) 2015 Antoloji\.Com
+L:Antoloji\.Com
+L:Standart Üye
+L:#
+L:^\[
+L:^\([0-9]+
+L:[<]|[>]
+L:\[[0-9]+\]$
+L:bakınız:
+L:^LÜTFEN DİKKAT
+L:görüntüledi$
+L:Ücretsiz üye olmak
+P:Şifrenizi unuttuysanız
+P:Bu sayfada hata var!
+L:FORUM
+L:http
+L:^Başlatan:
+L:^\(Başlama
+L:^-[ ]
+L:[ ]+-$
+L:\|
+L:Şu anda buradasınız
+L:^Bay,
+L:^Üyesi
+L:görüşünüzü aşağıya yazıp
+W:\([ 0-9.:]+\)
+
+forum.memurlar.net
+
+E:EVERYTHING
+I-:uye.memurlar.net
+I-:kategori
+L:&#
+L:\(Bkz
+L:\(bkz\:
+L:\*\*\*
+L:^\*\*
+L:^\-\-\-
+L:\d{4} \d{2}:\d{2}$
+L:kez görüntülendi
+L:defa okundu
+L:Alıntıya git
+L:^Editörler
+L:[ ]\\[ ]
+L:kez okundu
+L:^Toplam
+L:http
+
+
+www.tvyorumlari.com
+
+E:EVERYTHING
+L:Yorum Popülerlik
+L:^Aktif Kullanıcılar
+
+tv.yazarokur.com
+
+E:EVERYTHING
+L:->$
+L:!!$
+L:^TV:
+L:^Dizi:
+L:^Film:
+L:^::
+L:]$
+L: Oy$
+
+
+forum.shiftdelete.net
+
+E:EVERYTHING
+I-:member
+I-:whoposted
+I-:index
+I-:title
+I-:lastpost
+I-:replycount
+L:^Konuya bir cevap
+L:Tüm Zamanlar GMT
+L:Powered by vBulletin
+L:Content Relevant
+L:Parts of this site
+L:Nickli Üyeden Alıntı
+L:Gösterilen Sonuçlar:
+L:Konu:
+L:^[0-9]+ Sayfa
+L:^[0-9]+ Post
+L:Açık$
+L:^Cevaplar:
+L:[<]|[>]
+L:\[[0-9]+\]$
+L:\([0-9]+\)$
+L:http
+L:\|
+L:QUOTE
+L:değiştirilmiştir\.$
+L:^Taşındı:
+L:^yazan
+L:Fragmanı$
+L:Yorumlarınız$
+L:tarafından \(
+L:^Bu Mesaj
+L:- forum
+L:Üyecik$
+L:Profesör$
+L:Asistan$
+
+
+mobile.donanimhaber.com
+
+E:EVERYTHING
+I-:showprofile
+L:^<
+L:Cevap:
+L:^Orjinalden
+L:^Orijinalden
+L:quote
+L:Haberin devamı »
+L:yorum yazdı
+L:Görüntüleme$
+L:\([0-9]+\)$
+L:IMG_
+L:\|
+L:^\[
+L:^#
+L:\-\>
+L:sayfa$
+L:Sayfa:
+L:Yoruma Git
+L:Yorumun Devamı
+L:Tüm Forumlar
+L:Forumda değil
+L:^Bu mesajda
+L:http:
+L:gün önce\)
+L:Mesaja git
+L:Copyright
+L:Forum Software
+L:Cevapla$
+I-:showProfile
+I-:showForum
+P:bakim çalismasi yürütülmektedir
+L:^Tüm [f|F]orumlar
+L:^Cevap :
+L:^Şehir:
+L:mentioned
+L:Güncellendi
+L:^Eski kullanıcı
+L:>>+
+W:\[.+?\]
+W:^-\w+
+W:^-\W+
+W:^@\W
+W:^\d*\-\)
+L:ay önce$
+L:gün önce$
+W:\(Görsel\)
+L:Bütün Soru Başlıkları Silinecektir
+L:Bl\.$
+
+
+
+
+wowturkey.com
+
+E:EVERYTHING
+I-:topicdays
+L:Fotobiyografi
+L:önce -
+L:http
+L:mesajı beğendiniz mi
+L:^Misafir
+L:[«]|[»]
+L:\[[0-9]+\]
+L:tarihinde değiştirildi
+L:^@[ ]+
+L:^Foto :
+L:[ ][0-9]+$
+L:\[[0-9]+\]$
+L:\([0-9]+\)$
+L:^\[
+L:^%
+W:\[.+?\]
+W:\(Oylama\)
+
+www.duslerforum.org
+
+E:EVERYTHING
+P:Giriş yapmadınız yada Yetkiniz
+P:Copyright
+L:Adresimiz :
+L:Konu bulunmuştur\.
+L:Alt ForumLar :
+W:\[Linkleri Görebilmek için ÜYE Olmalısınız! Hemen ÜYE OL! \]
+
+www.formistan.com
+
+E:EVERYTHING
+L:Powered by
+L:Tüm Zamanlar GMT
+L:New Member$
+L:Bölüm Özeti$
+L:şu konuyu görüntülerken görüldü\:$
+
+www.forumotomobil.com
+
+E:EVERYTHING
+L:^Linkleri Sadece Kayıtlı
+L:^Başlık:
+L:^Gönderen:
+L:Gösterim:
+L:^Başlatan
+L:^Model:
+L:^Üye'ye
+L:^\[[0-9]+\]
+L:^Ynt:
+L:^Puan
+L: [0-9]+$
+L:Yanıt$
+L:^İleti:
+L:«|»
+L:Sayfa:
+L:sorgu ile oluşturulmuştur
+L:Okunma sayısı
+L:incelemekte$
+L:Aşağı git
+L:[<]|[>]
+L:\[[0-9]+\]$
+L:\([0-9]+\)$
+L:http
+L:konuyu incelemekte
+L:Üye$
+L:^\[
+W::[^ ]+:
+W:emoji[0-9]+
+L:Gönderen\:
+
+
+
+www.sikayetvar.com
+
+E:EVERYTHING
+I+:detay
+I+:tesekkur
+L:\|
+L:\.{3}
+I-:uye
+L:Şikayet No :
+L:[<]|[>]
+L:/
+L:\|
+L:^\[
+L:\[[0-9]+\]$
+L:\([0-9]+\)$
+L:Teşekkür Mesajı
+L:şikayet bulunamadı
+L:^[^ .]+\.com
+L:Kişi Gördü
+L:[0-9]+ Sonuç
+L:için teşekkür ederiz\.$
+L: [A-ZAÇĞİÜŞÖ]\.$
+L:http
+L:^Müşterimiz
+L:^[0-9]+\.[ ]
+L:^İlgili
+L:şikayet edilmiştir\.$
+L:iletilmiştir\.$
+L:^Değerli
+L:^Markamız
+
+
+www.nurturia.com.tr
+
+E:EVERYTHING
+I-:ReturnUrl
+I-:people
+L:[0-9]+H$
+L:[0-9]+Y$
+L:[0-9]+A$
+L:Ynt:
+L:[<]|[>]
+L:^Cevap
+L:^Etiketler
+L:^Ürünün
+L:^Üretim
+L:^Blackspade
+L:www
+L:Cevap$
+L:soruyor:$
+L:görüntülenemiyor
+L:/
+L:\|
+L:^Yorumlar
+L:\[[0-9]+\]$
+L:\([0-9]+\)$
+L:http
+L:İleti$
+
+
+www.hukuki.net
+
+E:EVERYTHING
+I-:member
+I-:list
+I-:forumdisplay
+L:[<]|[>]
+L:\[[0-9]+\]$
+L:\([0-9]+\)$
+L:http
+L:\|
+L:^Bu sayfa
+L:^Konu
+L:^Yanıt
+L:^Yazan
+L:^Cevap
+L:^Re:
+L:^Bütün Zaman
+L:^[0-9]+ Sayfalar
+L:içerik bulunamadı
+L:Sayfa$
+L:konu bulunmuştur
+
+www.kadinlarkulubu.com
+
+E:EVERYTHING
+I-:gallery
+I-:member
+I-:title
+I-:location-info
+I-:prefix_id
+I-:results
+I-:reply
+L:[<]|[>]
+L:\[[0-9]+\]$
+L:\([0-9]+\)$
+L:http
+L:Eki Görüntüle
+L:thread
+L:\|
+L:^Konu Sahibi
+L:dedi:
+L:^Konusu
+L:^Görüntüle
+L:^Read
+L:\d{2}-\d{2}-\d{4}$
+L:Aktif Üye
+L:Üye$
+L:sayfa$
+L:Guest$
+L:QUOTE
+W::[^ ]+:
+W:\[.+?\]
+
+www.yorumla.com
+
+E:EVERYTHING
+I-:UyeOl
+L:^Katıl
+L:Kişi$
+L:Yorum yaptı$
+L:Yorum yapıldı$
+L:Puan verildi$
+L:Puan verdi$
+L:-$
+
+

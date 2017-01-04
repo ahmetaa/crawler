@@ -4,6 +4,7 @@ import com.google.common.base.Charsets;
 
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URI;
 import java.nio.file.Files;
@@ -17,13 +18,16 @@ public class BatchController {
     public static void main(String[] args) throws Exception {
         Path domainList = Paths.get(args[0]);
         Path root = Paths.get(args[1]);
+        crawl(domainList, root);
+    }
 
+    private static void crawl(Path domainList, Path root) throws IOException, InterruptedException {
         List<Controller> controllers = Files.readAllLines(domainList, Charsets.UTF_8).stream()
                 .filter((line) -> !line.startsWith("#") && !line.trim().isEmpty())
                 .map((line) -> {
                     String[] split = line.trim().split("\\s+");
                     String domain = split[0];
-                    int politeness = 500;
+                    int politeness = 3000;
                     if (split.length == 2) {
                         politeness = Integer.parseInt(split[1]);
                     }
@@ -48,9 +52,7 @@ public class BatchController {
         while (!br.readLine().equalsIgnoreCase("done")) {
             Thread.sleep(1000);
         }
-        for (Controller controller : controllers) {
-            controller.stop();
-        }
+        controllers.forEach(Controller::stop);
     }
 
     private static final class DomainInfo {
