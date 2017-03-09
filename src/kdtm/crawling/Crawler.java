@@ -61,12 +61,21 @@ public class Crawler extends WebCrawler {
         if (patterns != null) {
             for (Pattern p : patterns.getUrlRemovePatterns()) {
                 if (Regexps.matchesAny(p, href)) {
-                    Log.info("[Ignored] %s with pattern %s", href, p.pattern());
                     return false;
                 }
             }
+            for (Pattern p : patterns.getUrlAcceptPatterns()) {
+                if (Regexps.matchesAny(p, href)) {
+                    Log.info("%s will be loaded.", href);
+                    return true;
+                }
+            }
+            if (patterns.getUrlAcceptPatterns().size() > 0) {
+                return false;
+            }
         }
 
+        Log.info("%s will be loaded.", href);
         return true;
     }
 
@@ -85,18 +94,14 @@ public class Crawler extends WebCrawler {
             if (fileName.length() > 255) {
                 fileName = fileName.substring(0, 255);
             }
-            String encoding = page.getContentEncoding();
-            String charset = page.getContentCharset();
 
             if (page.getParseData() instanceof HtmlParseData) {
                 HtmlParseData htmlParseData = (HtmlParseData) page.getParseData();
                 String html = htmlParseData.getHtml();
-                html = reduceHtml(html);
-
                 try (BufferedWriter bw = Files.newBufferedWriter(dir.resolve(fileName), Charsets.UTF_8)) {
                     bw.write(html);
                 }
-
+                Log.info("%s saved.", fileName);
             }
         } catch (Exception e) {
             System.err.println("Exception while visiting " + url);
@@ -106,7 +111,7 @@ public class Crawler extends WebCrawler {
     }
 
     static Pattern REMOVE_PATTERN = Pattern.compile(
-            "<script.+?</script>|<style.+?</style>|<option.+?</option>|<header.+?</header>|<!--.+?-->|<ul>.+?</ul>|<link.+?/>",
+            "<script.+?</script>|<style.+?</style>|<option.+?</option>|<header.+?</header>|<link.+?/>",
             //"<script.+?</script>|<style.+?</style>|<li.+?</li>|<!--.+?-->|<option.+?</option>|<link.+?/>",
             Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
@@ -115,7 +120,7 @@ public class Crawler extends WebCrawler {
     }
 
     public static void main(String[] args) throws IOException {
-        String content = String.join("\n", Files.readAllLines(Paths.get("test/html-full.txt"), StandardCharsets.UTF_8));
+        String content = String.join("\n", Files.readAllLines(Paths.get("test/html-full.html"), StandardCharsets.UTF_8));
         Files.write(Paths.get("test/reduced.html"), Lists.newArrayList(reduceHtml(content)), StandardCharsets.UTF_8);
     }
 }

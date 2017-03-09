@@ -4,13 +4,32 @@
 # P: Page regexp
 # W: word regexp. all matches will be replaced with space.
 # E: Extractor type
+# LABEL: label pattern
+# TITLE: Title pattern
+# CATEGORY: Category pattern
 
 global
 
 I-:video
 I-:galeri
 I-:foto-haber
+I-:fotohaber
 I-:webtv
+I-:/en/
+I-:/ar/
+I-:namaz-vakitleri
+I-:-vakti
+I-:/resim
+I-:/reklam/
+I-:secim-
+I-:\.jpg
+I-:autoplay
+L:devamını okumak için lütfen tıklayın
+L:Tüm hakları saklıdır
+L:iktibas edilemez
+L:metin boyutu
+L:metni yazdır
+TITLE:(<title>)(.+?)(</title>)
 
 L:[<]|[>]
 L:\[[0-9]+\]$
@@ -21,14 +40,29 @@ test
 
 L:^[ ]*[0-9]+\.[0-9]+%
 
+
+# -------------------- NEWS --------------------
+
+www.aa.com.tr
+I+:http://aa\.com\.tr/tr
+I-:haberakademisi
+I-:infografik
+
 www.aksam.com.tr
 
 www.cnnturk.com
+I-:i\.cnnturk.com
+LABEL:(<meta name="keywords" content=")(.+?)("[ ]?/>)
+CATEGORY:(<!--Haber Üst Kısmı-->.+?title=")(.+?)(")
+I-:action/ibanner
+I-:action/iplayer
 
 www.cumhuriyet.com.tr
 
 www.dunya.com
 E:ARTICLE
+LABEL:(<div class="tags">)(.+?)(</div>)
+I-:i\.dunya\.com
 
 www.ensonhaber.com
 
@@ -36,75 +70,202 @@ E:ARTICLE
 L:önce$
 
 www.haberturk.com
+I-:www\.haberturk\.com/secim
+I-:www\.haberturk\.com/spor/iddaa
 
 www.hurriyet.com.tr
 
 www.iha.com.tr
-
+I:yazdir
 E:ARTICLE
 L:\d{2}:\d{2}$
 L:[<]|[>]
+LABEL:(<p>Etiketler:)(.+?)(</div>)
+I-:foto-
 
 www.karar.com
 
 www.milliyet.com.tr
-
+I-:ilan-detay
+I-:uyeno
+I-:indir\.milliyet
+I-:arama
 E:ARTICLE
 L: Haberleri -
 L:\( permalink \)
 
 www.ntv.com.tr
+LABEL:(<h4>ETİKETLER</h4>)(.+?)(</section>)
 
 www.posta.com.tr
+W:\[\[HAFTAYA\]\]
 
 www.sabah.com.tr
-
+I-:cizerler
 I-:namaz-vakitleri
+I-:/yorum/
+
 E:ARTICLE
 
 www.sozcu.com.tr
+I-:amkspor
 
 t24.com.tr
+
+LABEL:(<div>ETİKETLER</div>)(.+?)(</div>)
+I-:m\.t24\.com
+
+www.yenisafak.com
+LABEL:(<div class="tag-main">)(.+?)(</div>)
+I-:hava-durumu
+I-:/reklam/
+I-:secim-
+I-:m\.yenisafak
+I-:/spor
+I-:assets
 
 www.zaytung.com
 I-:store\.zaytung\.com
 I-:user
+I-:www2
 
 www.bilim.org
 
-forum.antoloji.com
+
+# -------- comments and reviews. -------------
+
+tv.yazarokur.com
 
 E:EVERYTHING
+L:->$
+L:!!$
+L:^TV:
+L:^Dizi:
+L:^Film:
+L:^::
+L:]$
+L: Oy$
+
+www.tvyorumlari.com
+
+E:EVERYTHING
+L:Yorum Popülerlik
+L:^Aktif Kullanıcılar
+
+www.sikayetvar.com
+
+E:EVERYTHING
+I+:detay
+I+:tesekkur
+L:\|
+L:\.{3}
 I-:uye
-# `nedir` sayfalarında iyi veri var ama bazı kelimeler eklerinden bölünmüş
-# I-:nedir
-I-:gruplar
-P:(c) 2015 Antoloji\.Com
-L:Antoloji\.Com
-L:Standart Üye
-L:#
+L:Şikayet No :
+L:[<]|[>]
+L:/
+L:\|
 L:^\[
-L:^\([0-9]+
+L:\[[0-9]+\]$
+L:\([0-9]+\)$
+L:Teşekkür Mesajı
+L:şikayet bulunamadı
+L:^[^ .]+\.com
+L:Kişi Gördü
+L:[0-9]+ Sonuç
+L:için teşekkür ederiz\.$
+L: [A-ZAÇĞİÜŞÖ]\.$
+L:http
+L:^Müşterimiz
+L:^[0-9]+\.[ ]
+L:^İlgili
+L:şikayet edilmiştir\.$
+L:iletilmiştir\.$
+L:^Değerli
+L:^Markamız
+
+www.sikayetim.com
+
+www.yorumla.com
+
+E:EVERYTHING
+I-:UyeOl
+L:^Katıl
+L:Kişi$
+L:Yorum yaptı$
+L:Yorum yapıldı$
+L:Puan verildi$
+L:Puan verdi$
+L:-$
+
+lafmacun.net
+
+E:EVERYTHING
+
+#  ----------------- woman - baby -----------------
+
+www.nurturia.com.tr
+
+E:EVERYTHING
+I-:ReturnUrl
+I-:people
+L:[0-9]+H$
+L:[0-9]+Y$
+L:[0-9]+A$
+L:Ynt:
+L:[<]|[>]
+L:^Cevap
+L:^Etiketler
+L:^Ürünün
+L:^Üretim
+L:^Blackspade
+L:www
+L:Cevap$
+L:soruyor:$
+L:görüntülenemiyor
+L:/
+L:\|
+L:^Yorumlar
+L:\[[0-9]+\]$
+L:\([0-9]+\)$
+L:http
+L:İleti$
+
+www.kizlarsoruyor.com
+
+E:EVERYTHING
+
+www.kadinlarkulubu.com
+
+E:EVERYTHING
+I-:gallery
+I-:member
+I-:title
+I-:location-info
+I-:prefix_id
+I-:results
+I-:reply
 L:[<]|[>]
 L:\[[0-9]+\]$
-L:bakınız:
-L:^LÜTFEN DİKKAT
-L:görüntüledi$
-L:Ücretsiz üye olmak
-P:Şifrenizi unuttuysanız
-P:Bu sayfada hata var!
-L:FORUM
+L:\([0-9]+\)$
 L:http
-L:^Başlatan:
-L:^\(Başlama
-L:^-[ ]
-L:[ ]+-$
+L:Eki Görüntüle
+L:thread
 L:\|
-L:Şu anda buradasınız
-L:^Bay,
-L:^Üyesi
-L:görüşünüzü aşağıya yazıp
-W:\([ 0-9.:]+\)
+L:^Konu Sahibi
+L:dedi:
+L:^Konusu
+L:^Görüntüle
+L:^Read
+L:\d{2}-\d{2}-\d{4}$
+L:Aktif Üye
+L:Üye$
+L:sayfa$
+L:Guest$
+L:QUOTE
+W::[^ ]+:
+W:\[.+?\]
+
+#  ----------------- forum  -----------------
 
 forum.memurlar.net
 
@@ -126,26 +287,6 @@ L:[ ]\\[ ]
 L:kez okundu
 L:^Toplam
 L:http
-
-
-www.tvyorumlari.com
-
-E:EVERYTHING
-L:Yorum Popülerlik
-L:^Aktif Kullanıcılar
-
-tv.yazarokur.com
-
-E:EVERYTHING
-L:->$
-L:!!$
-L:^TV:
-L:^Dizi:
-L:^Film:
-L:^::
-L:]$
-L: Oy$
-
 
 forum.shiftdelete.net
 
@@ -185,7 +326,6 @@ L:- forum
 L:Üyecik$
 L:Profesör$
 L:Asistan$
-
 
 mobile.donanimhaber.com
 
@@ -239,9 +379,6 @@ W:\(Görsel\)
 L:Bütün Soru Başlıkları Silinecektir
 L:Bl\.$
 
-
-
-
 wowturkey.com
 
 E:EVERYTHING
@@ -264,6 +401,10 @@ L:^%
 W:\[.+?\]
 W:\(Oylama\)
 
+www.frmtr.com
+
+E:EVERYTHING
+
 www.duslerforum.org
 
 E:EVERYTHING
@@ -274,6 +415,10 @@ L:Konu bulunmuştur\.
 L:Alt ForumLar :
 W:\[Linkleri Görebilmek için ÜYE Olmalısınız! Hemen ÜYE OL! \]
 
+www.turkboard.com
+
+E:EVERYTHING
+
 www.formistan.com
 
 E:EVERYTHING
@@ -282,6 +427,88 @@ L:Tüm Zamanlar GMT
 L:New Member$
 L:Bölüm Özeti$
 L:şu konuyu görüntülerken görüldü\:$
+
+www.izafet.net
+
+E:EVERYTHING
+
+www.turkish-media.com
+
+E:EVERYTHING
+
+# literature
+
+forum.antoloji.com
+
+E:EVERYTHING
+I-:uye
+# `nedir` sayfalarında iyi veri var ama bazı kelimeler eklerinden bölünmüş
+# I-:nedir
+I-:gruplar
+P:(c) 2015 Antoloji\.Com
+L:Antoloji\.Com
+L:Standart Üye
+L:#
+L:^\[
+L:^\([0-9]+
+L:[<]|[>]
+L:\[[0-9]+\]$
+L:bakınız:
+L:^LÜTFEN DİKKAT
+L:görüntüledi$
+L:Ücretsiz üye olmak
+P:Şifrenizi unuttuysanız
+P:Bu sayfada hata var!
+L:FORUM
+L:http
+L:^Başlatan:
+L:^\(Başlama
+L:^-[ ]
+L:[ ]+-$
+L:\|
+L:Şu anda buradasınız
+L:^Bay,
+L:^Üyesi
+L:görüşünüzü aşağıya yazıp
+W:\([ 0-9.:]+\)
+
+# misc
+
+forum.korkurehberi.com
+
+E:EVERYTHING
+
+klimaforumu.com
+
+E:EVERYTHING
+
+# weather
+
+forum.havaforum.com
+
+E:EVERYTHING
+
+# defence
+
+savunmaturk.net
+
+E:EVERYTHING
+
+www.defenceturk.com
+
+E:EVERYTHING
+
+# hunting
+
+www.balikavi.net
+
+E:EVERYTHING
+
+avlakforum.com
+
+E:EVERYTHING
+
+# auto
 
 www.forumotomobil.com
 
@@ -316,68 +543,7 @@ W::[^ ]+:
 W:emoji[0-9]+
 L:Gönderen\:
 
-
-
-www.sikayetvar.com
-
-E:EVERYTHING
-I+:detay
-I+:tesekkur
-L:\|
-L:\.{3}
-I-:uye
-L:Şikayet No :
-L:[<]|[>]
-L:/
-L:\|
-L:^\[
-L:\[[0-9]+\]$
-L:\([0-9]+\)$
-L:Teşekkür Mesajı
-L:şikayet bulunamadı
-L:^[^ .]+\.com
-L:Kişi Gördü
-L:[0-9]+ Sonuç
-L:için teşekkür ederiz\.$
-L: [A-ZAÇĞİÜŞÖ]\.$
-L:http
-L:^Müşterimiz
-L:^[0-9]+\.[ ]
-L:^İlgili
-L:şikayet edilmiştir\.$
-L:iletilmiştir\.$
-L:^Değerli
-L:^Markamız
-
-
-www.nurturia.com.tr
-
-E:EVERYTHING
-I-:ReturnUrl
-I-:people
-L:[0-9]+H$
-L:[0-9]+Y$
-L:[0-9]+A$
-L:Ynt:
-L:[<]|[>]
-L:^Cevap
-L:^Etiketler
-L:^Ürünün
-L:^Üretim
-L:^Blackspade
-L:www
-L:Cevap$
-L:soruyor:$
-L:görüntülenemiyor
-L:/
-L:\|
-L:^Yorumlar
-L:\[[0-9]+\]$
-L:\([0-9]+\)$
-L:http
-L:İleti$
-
-
+# law
 www.hukuki.net
 
 E:EVERYTHING
@@ -401,47 +567,16 @@ L:içerik bulunamadı
 L:Sayfa$
 L:konu bulunmuştur
 
-www.kadinlarkulubu.com
+# Urban
+
+www.eksisozluk.com
 
 E:EVERYTHING
-I-:gallery
-I-:member
-I-:title
-I-:location-info
-I-:prefix_id
-I-:results
-I-:reply
-L:[<]|[>]
-L:\[[0-9]+\]$
-L:\([0-9]+\)$
-L:http
-L:Eki Görüntüle
-L:thread
-L:\|
-L:^Konu Sahibi
-L:dedi:
-L:^Konusu
-L:^Görüntüle
-L:^Read
-L:\d{2}-\d{2}-\d{4}$
-L:Aktif Üye
-L:Üye$
-L:sayfa$
-L:Guest$
-L:QUOTE
-W::[^ ]+:
-W:\[.+?\]
 
-www.yorumla.com
+www.uludagsozluk.com
 
 E:EVERYTHING
-I-:UyeOl
-L:^Katıl
-L:Kişi$
-L:Yorum yaptı$
-L:Yorum yapıldı$
-L:Puan verildi$
-L:Puan verdi$
-L:-$
+
+
 
 

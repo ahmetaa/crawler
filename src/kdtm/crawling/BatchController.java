@@ -27,7 +27,7 @@ public class BatchController {
                 .map((line) -> {
                     String[] split = line.trim().split("\\s+");
                     String domain = split[0];
-                    int politeness = 3000;
+                    int politeness = 2000;
                     if (split.length == 2) {
                         politeness = Integer.parseInt(split[1]);
                     }
