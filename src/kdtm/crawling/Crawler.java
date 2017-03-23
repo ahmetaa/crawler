@@ -33,11 +33,12 @@ public class Crawler extends WebCrawler {
 
     static {
         try {
-            patternsMap = ContentPatterns.fromFile(Paths.get("domains/content-rules.txt"));
+            patternsMap = ContentPatterns.fromFile(Paths.get("domains/crawl-rules.txt"));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     @Override
     public void init(int id, CrawlController crawlController) {
@@ -64,18 +65,9 @@ public class Crawler extends WebCrawler {
                     return false;
                 }
             }
-            for (Pattern p : patterns.getUrlAcceptPatterns()) {
-                if (Regexps.matchesAny(p, href)) {
-                    Log.info("%s will be loaded.", href);
-                    return true;
-                }
-            }
-            if (patterns.getUrlAcceptPatterns().size() > 0) {
-                return false;
-            }
         }
 
-        Log.info("%s will be loaded.", href);
+        Log.debug("%s will be loaded.", href);
         return true;
     }
 
@@ -84,6 +76,39 @@ public class Crawler extends WebCrawler {
 
         WebURL webURL = page.getWebURL();
         String url = webURL.getURL();
+
+        String href = webURL.getURL().toLowerCase();
+        ContentPatterns patterns = patternsMap.get(webURL.getDomain());
+        boolean ignore = true;
+        if (patterns != null) {
+
+            for (Pattern p : patterns.getUrlRemovePatterns()) {
+                if (Regexps.matchesAny(p, href)) {
+                    Log.info("%s will not be saved. (URL rule [%s])", href, p.pattern());
+                    return;
+                }
+            }
+
+            if (patterns.getUrlAcceptPatterns().size() > 0) {
+                for (Pattern p : patterns.getUrlAcceptPatterns()) {
+                    if (Regexps.matchesAny(p, href)) {
+                        Log.info("%s will be saved.", href);
+                        ignore = false;
+                        break;
+                    }
+                }
+            } else {
+                ignore = false;
+            }
+        } else {
+            ignore = false;
+        }
+
+        if(ignore) {
+            Log.info("%s is not saved.", href);
+            return;
+        }
+
         try {
             String date = LocalDateTime.now().format(DateTimeFormatter.ISO_DATE);
             Path dir = root.resolve(date);

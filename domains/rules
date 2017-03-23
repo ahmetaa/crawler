@@ -1,6 +1,0 @@
-SOURCE = http://www.nurturia.com.tr/
-IGNORE-URL = people,bazaar
-
-
-SOURCE = http://www.duslerforum.org/
-IGNORE-URL = uyeler
