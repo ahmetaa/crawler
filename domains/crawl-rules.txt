@@ -15,16 +15,28 @@ I-:galeri
 I-:foto-haber
 I-:fotohaber
 I-:banner
+I-:button
+I-:UyeProfil
+I-:eksisozluk\.com/entry
+I-:sikayetim\.com/send
+I-:yazarokur\.com/iletisim
 I-:webtv
 I-:/en/
 I-:/ar/
 I-:namaz-vakitleri
+I-:uye.memurlar\.net
+I-:kizlarsoruyor\.com/uye
+I-:kullanici-
+I-:kayitliste-
+I-:returnurl
+I-:loginModal
 I-:-vakti
 I-:/resim
 I-:/reklam/
 I-:secim-
 I-:\.jpg
 I-:autoplay
+I-:/uyeler/
 
 # -------------------- NEWS --------------------
 
@@ -235,6 +247,10 @@ www.eksisozluk.com
 
 www.uludagsozluk.com
 
+I-:uludagsozluk.com/e/
+I-:uludagsozluk.com/ses/
+I-:uludagsozluk.com/v/
+
 # commerce reviews
 
 www.hepsiburada.com
@@ -264,5 +280,3 @@ I-:/enteresan
 I-:video
 I-:uye-
 I+:elestiriler
-
-

@@ -21,6 +21,7 @@ import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
@@ -37,6 +38,18 @@ public class Crawler extends WebCrawler {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    ContentPatterns getPatternsIfContains(String domain) {
+        domain = domain.replaceAll("www\\.|http://|https://", "").toLowerCase(Locale.ENGLISH);
+        for (String s : patternsMap.keySet()) {
+            s = s.toLowerCase();
+            if (s.contains(domain)) {
+                return patternsMap.get(s);
+            }
+        }
+        Log.warn("No patterns found for %s", domain);
+        return null;
     }
 
 
@@ -58,7 +71,7 @@ public class Crawler extends WebCrawler {
             return false;
         }
 
-        ContentPatterns patterns = patternsMap.get(url.getDomain());
+        ContentPatterns patterns = getPatternsIfContains(url.getDomain());
         if (patterns != null) {
             for (Pattern p : patterns.getUrlRemovePatterns()) {
                 if (Regexps.matchesAny(p, href)) {
@@ -78,8 +91,11 @@ public class Crawler extends WebCrawler {
         String url = webURL.getURL();
 
         String href = webURL.getURL().toLowerCase();
-        ContentPatterns patterns = patternsMap.get(webURL.getDomain());
+
+        ContentPatterns patterns = getPatternsIfContains(webURL.getDomain());
+
         boolean ignore = true;
+
         if (patterns != null) {
 
             for (Pattern p : patterns.getUrlRemovePatterns()) {
@@ -104,7 +120,7 @@ public class Crawler extends WebCrawler {
             ignore = false;
         }
 
-        if(ignore) {
+        if (ignore) {
             Log.info("%s is not saved.", href);
             return;
         }
