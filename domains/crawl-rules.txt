@@ -20,6 +20,7 @@ I-:UyeProfil
 I-:eksisozluk\.com/entry
 I-:sikayetim\.com/send
 I-:yazarokur\.com/iletisim
+I-:/profil/
 I-:webtv
 I-:/en/
 I-:/ar/
@@ -37,6 +38,11 @@ I-:secim-
 I-:\.jpg
 I-:autoplay
 I-:/uyeler/
+I-:/login/
+I-:printpage
+I-:search\.php
+I-:newreply\.php
+I-:nick=
 
 # -------------------- NEWS --------------------
 
@@ -54,6 +60,7 @@ I-:http://aa\.com\.tr/fa
 I-:http://aa\.com\.tr/mk
 I-:haberakademisi
 I-:infografik
+I-:[^ ]+\.aa
 
 www.aksam.com.tr
 
@@ -68,6 +75,8 @@ www.dunya.com
 I-:i\.dunya\.com
 
 www.ensonhaber.com
+
+I-:[^ ]+\.ensonhaber
 
 www.haberturk.com
 I-:www\.haberturk\.com/secim
@@ -124,6 +133,8 @@ www.bilim.org
 
 tv.yazarokur.com
 
+I-:/giris
+
 www.tvyorumlari.com
 
 www.sikayetvar.com
@@ -132,6 +143,8 @@ I+:sikayetvar\.com/[^/]+$
 I-:uye
 
 www.sikayetim.com
+
+I-:loginModal
 
 www.yorumla.com
 
@@ -165,7 +178,7 @@ I-:reply
 
 forum.memurlar.net
 
-I-:uye.memurlar.net
+I-:uye\.memurlar\.net
 I-:kategori
 
 forum.shiftdelete.net
@@ -176,6 +189,7 @@ I-:index
 I-:title
 I-:lastpost
 I-:replycount
+I-:/search/
 
 mobile.donanimhaber.com
 
@@ -197,7 +211,7 @@ www.formistan.com
 
 www.izafet.net
 
-www.turkish-media.com
+# www.turkish-media.com
 
 # literature
 
@@ -217,6 +231,10 @@ klimaforumu.com
 # weather
 
 forum.havaforum.com
+
+I-:members-list
+I-:/user
+I-:/search
 
 # defence
 
@@ -244,6 +262,9 @@ I-:forumdisplay
 # Urban
 
 www.eksisozluk.com
+
+I-:nick=
+
 
 www.uludagsozluk.com
 
@@ -280,3 +301,7 @@ I-:/enteresan
 I-:video
 I-:uye-
 I+:elestiriler
+
+www.listelist.com
+
+onedio.com
