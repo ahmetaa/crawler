@@ -76,7 +76,7 @@ I-:i\.dunya\.com
 
 www.ensonhaber.com
 
-I-:[^ ]+\.ensonhaber
+I-:m\.ensonhaber
 
 www.haberturk.com
 I-:www\.haberturk\.com/secim
@@ -264,7 +264,7 @@ I-:forumdisplay
 www.eksisozluk.com
 
 I-:nick=
-
+I-:/\?q=
 
 www.uludagsozluk.com
 
