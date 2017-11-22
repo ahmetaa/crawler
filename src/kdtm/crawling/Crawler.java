@@ -7,6 +7,7 @@ import edu.uci.ics.crawler4j.crawler.Page;
 import edu.uci.ics.crawler4j.crawler.WebCrawler;
 import edu.uci.ics.crawler4j.parser.HtmlParseData;
 import edu.uci.ics.crawler4j.url.WebURL;
+import java.net.URLDecoder;
 import suskun.extractor.ContentPatterns;
 import zemberek.core.logging.Log;
 import zemberek.core.text.Regexps;
@@ -100,7 +101,8 @@ public class Crawler extends WebCrawler {
 
             for (Pattern p : patterns.getUrlRemovePatterns()) {
                 if (Regexps.matchesAny(p, href)) {
-                    Log.info("%s will not be saved. (URL rule [%s])", href, p.pattern());
+                    String clean = getString(href);
+                    Log.info("%s will not be saved. (URL rule [%s])", clean, p.pattern());
                     return;
                 }
             }
@@ -108,7 +110,8 @@ public class Crawler extends WebCrawler {
             if (patterns.getUrlAcceptPatterns().size() > 0) {
                 for (Pattern p : patterns.getUrlAcceptPatterns()) {
                     if (Regexps.matchesAny(p, href)) {
-                        Log.info("%s will be saved.", href);
+                        String clean = getString(href);
+                        Log.info("%s will be saved.", clean);
                         ignore = false;
                         break;
                     }
@@ -121,7 +124,7 @@ public class Crawler extends WebCrawler {
         }
 
         if (ignore) {
-            Log.info("%s is not saved.", href);
+            Log.info("%s is not saved.", getString(href));
             return;
         }
 
@@ -142,13 +145,23 @@ public class Crawler extends WebCrawler {
                 try (BufferedWriter bw = Files.newBufferedWriter(dir.resolve(fileName), Charsets.UTF_8)) {
                     bw.write(html);
                 }
-                Log.info("%s saved.", fileName);
+                Log.info("%s saved.", getString(fileName));
             }
         } catch (Exception e) {
             System.err.println("Exception while visiting " + url);
             System.err.println(e.toString());
             System.err.println("");
         }
+    }
+
+    private String getString(String href) {
+        String clean;
+        try {
+            clean = URLDecoder.decode(href, "UTF-8");
+        } catch (Exception e) {
+            clean = href;
+        }
+        return clean;
     }
 
     static Pattern REMOVE_PATTERN = Pattern.compile(

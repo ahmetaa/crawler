@@ -43,6 +43,7 @@ I-:printpage
 I-:search\.php
 I-:newreply\.php
 I-:nick=
+I-:/etiket/
 
 # -------------------- NEWS --------------------
 
@@ -73,10 +74,12 @@ www.cumhuriyet.com.tr
 
 www.dunya.com
 I-:i\.dunya\.com
+I-:m\.dunya\.com
 
 www.ensonhaber.com
 
 I-:m\.ensonhaber
+I-:icdn\.ensonhaber
 
 www.haberturk.com
 I-:www\.haberturk\.com/secim
@@ -87,6 +90,7 @@ www.hurriyet.com.tr
 www.iha.com.tr
 I-:yazdir
 I-:foto-
+I-:etiket-
 
 www.karar.com
 
@@ -94,6 +98,7 @@ www.milliyet.com.tr
 I-:ilan-detay
 I-:uyeno
 I-:indir\.milliyet
+I-:m\.milliyet
 I-:arama
 
 www.ntv.com.tr
@@ -111,6 +116,7 @@ I-:amkspor
 t24.com.tr
 
 I-:m\.t24\.com
+I-:/etiketler/
 
 www.yenisafak.com
 
@@ -197,6 +203,7 @@ mobile.donanimhaber.com
 I-:showprofile
 I-:showProfile
 I-:showForum
+I-:filter
 
 wowturkey.com
 
@@ -259,6 +266,8 @@ www.hukuki.net
 I-:member
 I-:list
 I-:forumdisplay
+I-:law\.hukuki
+I-:yabanci\.hukuki
 
 # Urban
 
@@ -266,12 +275,14 @@ www.eksisozluk.com
 
 I-:nick=
 I-:/\?q=
+I-:/basliklar/
 
 www.uludagsozluk.com
 
 I-:uludagsozluk.com/e/
 I-:uludagsozluk.com/ses/
 I-:uludagsozluk.com/v/
+I-:nickimde-degilsiniz\.uludagsozluk
 
 # commerce reviews
 
