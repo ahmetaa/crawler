@@ -1,4 +1,4 @@
-package kdtm.crawling;
+package suskun.crawling;
 
 import edu.uci.ics.crawler4j.crawler.CrawlConfig;
 import edu.uci.ics.crawler4j.crawler.CrawlController;
@@ -30,6 +30,7 @@ public class Controller {
         controller.addSeed(uri.toString());
         controller.setCustomData(root.resolve("data"));
     }
+
 
     public void start() throws Exception {
         controller.startNonBlocking(Crawler.class, 2);

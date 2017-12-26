@@ -1,4 +1,4 @@
-package kdtm.crawling;
+package suskun.crawling;
 
 import com.google.common.base.Charsets;
 

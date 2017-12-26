@@ -1,9 +1,13 @@
 # I-: page id regexp
-# I+: page is "saved" if id matches to this pattern.
+# I+: page is accepted if id matches to this pattern.
 # L: Line regular expression. if matches, line is ignored.
 # P: Page regexp
 # W: word regexp. all matches will be replaced with space.
 # E: Extractor type
+# RP: Replace patten with string. foo->bar, all matches with Pattern("foo") will replaced with "bar"
+# RW: Replace string. foo->bar, all matches with string "foo" will replaced with "bar"
+# RW-E: Replace string Encoded. Used for writing profanity words. Format is foo->bar but bar needs to be decoded as +1 chars.
+#       Such as foo->cbs. Only english alphabetic letters must be encoded.
 # LABEL: label pattern
 # TITLE: Title pattern
 # CATEGORY: Category pattern
@@ -17,16 +21,11 @@ I-:fotohaber
 I-:banner
 I-:button
 I-:UyeProfil
-I-:eksisozluk\.com/entry
-I-:sikayetim\.com/send
-I-:yazarokur\.com/iletisim
 I-:/profil/
 I-:webtv
 I-:/en/
 I-:/ar/
 I-:namaz-vakitleri
-I-:uye.memurlar\.net
-I-:kizlarsoruyor\.com/uye
 I-:kullanici-
 I-:kayitliste-
 I-:returnurl
@@ -45,6 +44,25 @@ I-:newreply\.php
 I-:nick=
 I-:/etiket/
 
+L:devamını okumak için lütfen tıklayın
+L:Tüm hakları saklıdır
+L:iktibas edilemez
+L:metin boyutu
+L:metni yazdır
+TITLE:(<title>)(.+?)(</title>)
+
+L:[<]|[>]
+L:\[[0-9]+\]$
+L:\([0-9]+\)$
+L:\d{2}:\d{2}$
+L:\d{2}\.\d{2}\.\d{4}$
+L:http
+L:Tıkla İzle
+
+test
+
+L:^[ ]*[0-9]+\.[0-9]+%
+
 # -------------------- NEWS --------------------
 
 www.aa.com.tr
@@ -59,6 +77,9 @@ I-:http://aa\.com\.tr/ks
 I-:http://aa\.com\.tr/sq
 I-:http://aa\.com\.tr/fa
 I-:http://aa\.com\.tr/mk
+I-:http://aa\.com\.tr/es
+I-:http://aa\.com\.tr/es
+I-:http://aa\.com\.tr/id
 I-:haberakademisi
 I-:infografik
 I-:[^ ]+\.aa
@@ -67,30 +88,49 @@ www.aksam.com.tr
 
 www.cnnturk.com
 I-:i\.cnnturk.com
+LABEL:(<meta name="keywords" content=")(.+?)("[ ]?/>)
+CATEGORY:(<!--Haber Üst Kısmı-->.+?title=")(.+?)(")
 I-:action/ibanner
 I-:action/iplayer
+I-:/amp/
 
 www.cumhuriyet.com.tr
 
 www.dunya.com
+E:ARTICLE
+LABEL:(<div class="tags">)(.+?)(</div>)
 I-:i\.dunya\.com
 I-:m\.dunya\.com
 
 www.ensonhaber.com
 
+E:ARTICLE
+L:önce$
+L:kez izlendi$
+L:Ensonhaber\.com
+L:Tıkla İzle
+L:İZLE$
 I-:m\.ensonhaber
-I-:icdn\.ensonhaber
+I-:/takipciler
+I-:/u/
+
 
 www.haberturk.com
 I-:www\.haberturk\.com/secim
 I-:www\.haberturk\.com/spor/iddaa
+I-:m\.haberturk
 
 www.hurriyet.com.tr
 
 www.iha.com.tr
 I-:yazdir
+E:ARTICLE
+L:\d{2}:\d{2}$
+L:[<]|[>]
+LABEL:(<p>Etiketler:)(.+?)(</div>)
 I-:foto-
 I-:etiket-
+I-:/amp/
 
 www.karar.com
 
@@ -98,28 +138,38 @@ www.milliyet.com.tr
 I-:ilan-detay
 I-:uyeno
 I-:indir\.milliyet
-I-:m\.milliyet
 I-:arama
+I-:m\.milliyet
+E:ARTICLE
+L:Haberleri -
+L:Haberleri   -
+L:TIKLAYINIZ
+L:\( permalink \)
 
 www.ntv.com.tr
+LABEL:(<h4>ETİKETLER</h4>)(.+?)(</section>)
 
 www.posta.com.tr
+W:\[\[HAFTAYA\]\]
 
 www.sabah.com.tr
 I-:cizerler
 I-:namaz-vakitleri
+I-:m\.sabah
 I-:/yorum/
+I-:/secim/
+E:ARTICLE
 
 www.sozcu.com.tr
 I-:amkspor
 
 t24.com.tr
-
+LABEL:(<div>ETİKETLER</div>)(.+?)(</div>)
+I-:/etiketler
 I-:m\.t24\.com
-I-:/etiketler/
 
 www.yenisafak.com
-
+LABEL:(<div class="tag-main">)(.+?)(</div>)
 I-:hava-durumu
 I-:/reklam/
 I-:secim-
@@ -140,21 +190,89 @@ www.bilim.org
 tv.yazarokur.com
 
 I-:/giris
+I-:uyeol_id
+I-:yazarokur\.com/iletisim
+E:EVERYTHING
+L:->$
+L:!!$
+L:^TV:
+L:^Dizi:
+L:^Film:
+L:^::
+L:]$
+L: Oy$
+L:^Sunucu:
+L:^seviye:
+L:^•
+L:[+]+$
 
 www.tvyorumlari.com
 
+E:EVERYTHING
+L:Yorum Popülerlik
+L:^Aktif Kullanıcılar
+L:^#
+L:[ ]Yorumları$
+L:[*]{3}
+
 www.sikayetvar.com
 
+E:EVERYTHING
+I+:detay
+I+:tesekkur
 I+:sikayetvar\.com/[^/]+$
+I-:page=[0-9]+
+L:\|
+L:\.{3}
 I-:uye
+L:Şikayet No :
+L:[<]|[>]
+L:/
+L:\|
+L:^\[
+L:\[[0-9]+\]$
+L:\([0-9]+\)$
+L:Teşekkür Mesajı
+L:şikayet bulunamadı
+L:^[^ .]+\.com
+L:Kişi Gördü
+L:[0-9]+ Sonuç
+L:için teşekkür ederiz\.$
+L: [A-ZAÇĞİÜŞÖ]\.$
+L:http
+L:^Müşterimiz
+L:^[0-9]+\.[ ]
+L:^İlgili
+L:şikayet edilmiştir\.$
+L:iletilmiştir\.$
+L:^Değerli
+L:^Markamız
+L:^Markalar
+L:[ ]Okunma$
+L:\d{6}$
+L:^Sayın[ ]
+L:[0-9]+[ ](Ocak|Şubat|Mart|Nisan|Mayıs|Haziran|Temmuz|Ağustos|Eylül|Ekim|Kasım|Aralık)$
 
 www.sikayetim.com
-
+E:EVERYTHING
+I-:sikayetim\.com/send
 I-:loginModal
+L:^görüntüleme:
+L:\.\.\. Devam$
+L:^cevap
+L:^Memnuniyetler:
 
 www.yorumla.com
 
+E:EVERYTHING
 I-:UyeOl
+L:^Katıl
+L:Kişi$
+L:Yorum yaptı$
+L:Yorum yapıldı$
+L:Puan verildi$
+L:Puan verdi$
+L:-$
 
 lafmacun.net
 
@@ -164,15 +282,64 @@ E:EVERYTHING
 
 www.nurturia.com.tr
 
+E:EVERYTHING
 I-:ReturnUrl
 I-:people
+L:[0-9]+H$
+L:[0-9]+Y$
+L:[0-9]+A$
+L:Ynt:
+L:[<]|[>]
+L:^Cevap
+L:^Etiketler
+L:^Ürünün
+L:^Üretim
+L:^Blackspade
+L:www
+L:Cevap$
+L:soruyor:$
+L:görüntülenemiyor
+L:/
+L:\|
+L:^Yorumlar
+L:^Son:
+L:\[[0-9]+\]$
+L:\([0-9]+\)$
+L:[0-9]+$
+L:[ ]Menü$
+L:[ ]hamileleri$
+L:[ ]anneleri$
+L:http
+L:soruyor:
+L:[*?]+H[*]
+L:İleti$
+
 
 www.kizlarsoruyor.com
 
-I-:/ara\?
+I-:/ara?
+I-:=sorular
+L:Ana Sayfa >
+L:Xper
+L:eig[ ]
+W:Daha Fazla
+W:#[^ ]+
+L:[0-9]+ EİG Seçildi
+L:[0-9]+ Geçerli Görüş
+L:Kızlar Ne Diyor [0-9]+
+L:Erkekler Ne Diyor [0-9]+
+L:[0-9]+ Soru sordu
+L:[0-9]+ Görüş paylaştı
+L:Editör$
+L:Fenomen$
+L:Daha Az Göster$
+E:EVERYTHING
 
 www.kadinlarkulubu.com
 
+E:EVERYTHING
+I-:/likes
+I-:/photos/
 I-:gallery
 I-:member
 I-:title
@@ -180,109 +347,492 @@ I-:location-info
 I-:prefix_id
 I-:results
 I-:reply
+L:[<]|[>]
+L:\[[0-9]+\]$
+L:\([0-9]+\)$
+L:http
+L:Eki Görüntüle
+L:thread
+L:\|
+L:^Konu Sahibi
+L:dedi:
+L:^Konusu
+L:^Görüntüle
+L:^Read
+L:\d{2}-\d{2}-\d{4}$
+L:Aktif Üye
+L:Üye$
+L:sayfa$
+L:Guest$
+L:QUOTE
+L:kullanıcısı henüz
+L:Oylanma:
+L:adlı üyenin
+L:etiketlendiği fotoğraflar\.
+L:Ziyaretçi$
+L:bunu beğendi\.$
+L:^Album:
+W::[^ ]+:
+W:\[.+?\]
 
 #  ----------------- forum  -----------------
 
 forum.memurlar.net
 
-I-:uye\.memurlar\.net
+E:EVERYTHING
+I-:uye.memurlar.net
 I-:kategori
+L:&#
+L:\(Bkz
+L:\(bkz\:
+L:\*\*\*
+L:^\*\*
+L:^\-\-\-
+L:\d{4} \d{2}:\d{2}$
+L:kez görüntülendi
+L:defa okundu
+L:Alıntıya git
+L:^Editörler
+L:[ ]\\[ ]
+L:kez okundu
+L:^Toplam
+L:http
 
 forum.shiftdelete.net
 
+E:EVERYTHING
 I-:member
 I-:whoposted
 I-:index
+I-:_debug
 I-:title
 I-:lastpost
 I-:replycount
 I-:/search/
+I-:redirect=
+L:^Konuya bir cevap
+L:Tüm Zamanlar GMT
+L:Powered by vBulletin
+L:Content Relevant
+L:Parts of this site
+L:Nickli Üyeden Alıntı
+L:Gösterilen Sonuçlar:
+L:Konu:
+L:^[0-9]+ Sayfa
+L:^[0-9]+ Post
+L:Açık$
+L:^Cevaplar:
+L:[<]|[>]
+L:\[[0-9]+\]$
+L:\([0-9]+\)$
+L:http
+L:\|
+L:QUOTE
+L:değiştirilmiştir\.$
+L:^Taşındı:
+L:^yazan
+L:Fragmanı$
+L:Yorumlarınız$
+L:tarafından \(
+L:^Bu Mesaj
+L:- forum
+L:Üyecik$
+L:Profesör$
+L:Asistan$
+L:dedi:
+L:said:
+L:Quote Reply
+L:Konuyu açan:
+L:Params:
+L:^\d{4}-\d{2}-\d{2}
 
 mobile.donanimhaber.com
 
+E:EVERYTHING
 I-:showprofile
-I-:showProfile
 I-:showForum
 I-:filter
+L:^<
+L:Cevap:
+L:^Orjinalden
+L:^Orijinalden
+L:quote
+L:Haberin devamı »
+L:yorum yazdı
+L:Görüntüleme$
+L:\([0-9]+\)$
+L:IMG_
+L:\|
+L:^\[
+L:^#
+L:\-\>
+L:sayfa$
+L:Sayfa:
+L:Yoruma Git
+L:Yorumun Devamı
+L:Tüm Forumlar
+L:Forumda değil
+L:^Bu mesajda
+L:http:
+L:gün önce\)
+L:Mesaja git
+L:Copyright
+L:Forum Software
+L:Cevapla$
+I-:showProfile
+I-:showForum
+P:bakim çalismasi yürütülmektedir
+L:^Tüm [f|F]orumlar
+L:^Cevap :
+L:^Şehir:
+L:mentioned
+L:Güncellendi
+L:^Eski kullanıcı
+L:>>+
+W:\[.+?\]
+W:^-\w+
+W:^-\W+
+W:^@\W
+W:^\d*\-\)
+L:ay önce$
+L:gün önce$
+W:\(Görsel\)
+L:Bütün Soru Başlıkları Silinecektir
+L:Bl\.$
+L:mesaj\)$
+L:^Tıklama
+L:[ ]önce$
+L:[ ]dün$
+L:[0-9]+[ ]gün$
+L:[0-9]+[ ]dk\.$
+L:[0-9]+[ ]sa\.$
+L:[0-9]+[ ]yıl$
+L:[0-9]+[ ]ay$
+L:Sabit Konu
 
 wowturkey.com
 
+E:EVERYTHING
 I-:topicdays
+L:Fotobiyografi
+L:önce -
+L:http
+L:mesajı beğendiniz mi
+L:^Misafir
+L:[«]|[»]
+L:\[[0-9]+\]
+L:tarihinde değiştirildi
+L:^@[ ]+
+L:^Foto :
+L:[ ][0-9]+$
+L:\[[0-9]+\]$
+L:\([0-9]+\)$
+L:^\[
+L:^%
+L:^[^-^ ]+[ ]?-
+L:\(Kilitli\)$
+L:^·
+W:\[.+?\]
+W:\(Oylama\)
 
 www.frmtr.com
 
+E:EVERYTHING
+I-:-post[0-9]+\.
+I-:bolum-index
+L:Tüm saatler
+L:Gön:
+L:Moderatörler
+L:Tartışma Konusu :
+L:^Taşındı:
+L:^C:
+
 www.duslerforum.org
+
+E:EVERYTHING
+P:Giriş yapmadınız yada Yetkiniz
+P:Copyright
+L:Adresimiz :
+L:Konu bulunmuştur\.
+L:Alt ForumLar :
+W:\[Linkleri Görebilmek için ÜYE Olmalısınız! Hemen ÜYE OL! \]
 
 www.turkboard.com
 
+E:EVERYTHING
+
 www.formistan.com
+
+E:EVERYTHING
+L:Powered by
+L:Tüm Zamanlar GMT
+L:New Member$
+L:Bölüm Özeti$
+L:şu konuyu görüntülerken görüldü\:$
 
 www.izafet.net
 
-# www.turkish-media.com
+E:EVERYTHING
+
+www.turkish-media.com
+
+E:EVERYTHING
 
 # literature
 
 forum.antoloji.com
 
-
+E:EVERYTHING
 I-:uye
+# `nedir` sayfalarında iyi veri var ama bazı kelimeler eklerinden bölünmüş
+# I-:nedir
 I-:gruplar
+P:(c) 2015 Antoloji\.Com
+L:Antoloji\.Com
+L:Standart Üye
+L:#
+L:^\[
+L:^\([0-9]+
+L:[<]|[>]
+L:\[[0-9]+\]$
+L:bakınız:
+L:^LÜTFEN DİKKAT
+L:görüntüledi$
+L:Ücretsiz üye olmak
+P:Şifrenizi unuttuysanız
+P:Bu sayfada hata var!
+L:FORUM
+L:http
+L:^Başlatan:
+L:^\(Başlama
+L:^-[ ]
+L:[ ]+-$
+L:\|
+L:Şu anda buradasınız
+L:^Bay,
+L:^Üyesi
+L:görüşünüzü aşağıya yazıp
+W:\([ 0-9.:]+\)
 
 # misc
 
 forum.korkurehberi.com
 
+E:EVERYTHING
+
 klimaforumu.com
 
+I-:printthread
+E:EVERYTHING
+L:^Yorum Sayısı:
+L:^Konu Sayısı:
+L:^Sponsor Link
+L:^Beğeniler:
+L:^Rep Puanı:
+L:^Şehir:
+L:^RE:
+L:Konu Başlığı
+L:konusu$
 
 # weather
 
 forum.havaforum.com
-
 I-:members-list
 I-:/user
 I-:/search
+I-:/tagged
+
+E:EVERYTHING
 
 # defence
 
 savunmaturk.net
 
+E:EVERYTHING
+
 www.defenceturk.com
+L:^«
+L:»$
+L:^Beğeni
+L:\.\.\.$
+L:^Ynt:
+L:^Sayfa:
+L:^İleti:
+L:^Beğenilen konu
+L:^Normal Konu
+L:^Bugün En
+L:^SMF
+L:^Alıntı yapılan
+L:İleti$
+L:Gösterim$
+L:^Gönderen Konu:
+L:Okunma sayısı
+L:Üye$
+L:Konu$
+L:Son İleti
+L:Alt Bölümler:
+L:Moderatörler:
+L:\([ 0-9]+\)$
+
+
+E:EVERYTHING
 
 # hunting
 
 www.balikavi.net
 
+E:EVERYTHING
+
 avlakforum.com
+I-:msg[0-9]+
+L:^Gönderen
+L:Ziyaretçi,
+L:Son Düzenleme
+
+E:EVERYTHING
 
 # auto
 
 www.forumotomobil.com
 
+E:EVERYTHING
+L:^Linkleri Sadece Kayıtlı
+L:^Başlık:
+L:^Gönderen:
+L:Gösterim:
+L:^Başlatan
+L:^Model:
+L:^Üye'ye
+L:^\[[0-9]+\]
+L:^Ynt:
+L:^Puan
+L: [0-9]+$
+L:Yanıt$
+L:^İleti:
+L:«|»
+L:Sayfa:
+L:sorgu ile oluşturulmuştur
+L:Okunma sayısı
+L:incelemekte$
+L:Aşağı git
+L:[<]|[>]
+L:\[[0-9]+\]$
+L:\([0-9]+\)$
+L:http
+L:konuyu incelemekte
+L:Üye$
+L:^\[
+W::[^ ]+:
+W::[^:]+:
+W:emoji[0-9]+
+L:Gönderen\:
+
 # law
 www.hukuki.net
 
+E:EVERYTHING
 I-:member
 I-:list
 I-:forumdisplay
+I-:en\.hukuki\.net
+I-:/haber/
 I-:law\.hukuki
 I-:yabanci\.hukuki
+I-:/links/
+L:[<]|[>]
+L:\[[0-9]+\]$
+L:\([0-9]+\)$
+L:http
+L:\|
+L:^Bu sayfa
+L:^Konu
+L:^Yanıt
+L:^Yazan
+L:^Cevap
+L:^Re:
+L:^•
+L:^Bütün Zaman
+L:^[0-9]+ Sayfalar
+L:içerik bulunamadı
+L:Sayfa$
+L:konu bulunmuştur
 
 # Urban
 
 www.eksisozluk.com
-
+E:EVERYTHING
 I-:nick=
 I-:/\?q=
 I-:/basliklar/
+I-:a=dailynice
+I-:a=popular
+I-:/entry/
+I-:eksisozluk\.com/entry
+L:^\(bkz
+L:önce$
 
 www.uludagsozluk.com
 
+E:EVERYTHING
 I-:uludagsozluk.com/e/
 I-:uludagsozluk.com/ses/
 I-:uludagsozluk.com/v/
 I-:nickimde-degilsiniz\.uludagsozluk
+L:[0-9]+ entry
+L:bkz:
+L:^\.\.\.
+L:^#[0-9]+
+L:^bu hafta [0-9]+
+L:[0-9]+ takipçi
+L:belki onlar işinize yarar.$
+L:başlığı henüz açılmamış!$
+L:^günün[ ]
+L:[ ]\|[ ]
+L:galeri [0-9]+
+L:video [0-9]+
+L:[0-9]+ dk önce$
+L:ulupuan$
+
+
+www.incisozluk.com.tr
+
+E:EVERYTHING
+I-:/e/
+I-:/u/
+I-:=iletisim
+I-:/populer/
+I-:/yeni/
+I-:/eniyi/
+I-:/sahibi/
+I-:list_
+I-:/\?url/
+RW-E:huur->psptqv
+RW-E:giber->tjlfs
+RW-E:gibim->tjlfzjn
+RW-E:gibe->tjlm
+RW-E:gibc->tjld
+RW-E:gibt->tjlu
+RW-E:gibm->tjln
+RW-E:gibsi->tjltj
+RW-E:gibse->tjltf
+RW-E:gibiş->tjljş
+RW-E:gibici->tjljdj
+RW-E:gibimd->tjljne
+RW-E:gibil->tjljm
+RW-E:gibin->tjljo
+RW-E:ferre->qpsop
+RW-E:[ gib ]->[ tjl ]
+RW-E:dıbı->bnı
+RW-E:züt->höu
+RW-E:muallak->jcmf
+RW-E:qorno->qpsop
+RW:pgibo->psiko
+RW:kegib->kesik
+RW:klagib->klasik
+RW:ekgib->eksik
+L:köle no
+L:\(bkz
+W:edit [0-9]+
 
 # commerce reviews
 
@@ -294,10 +844,12 @@ I-:filtre
 I-:yeni-uye
 I-:blog
 I-:haberler
+E:EVERYTHING
 
 # movie reviews
 
 www.beyazperde.com
+E:EVERYTHING
 I-:sinemalar
 I-:sanatcilar
 I-:haberler
@@ -315,8 +867,13 @@ I-:uye-
 I+:elestiriler
 
 www.listelist.com
+E:ARTICLE
 
 onedio.com
-
+E:EVERYTHING
 I-:/ara/
 I-:/etiket/
+L:Facebook'ta Paylaş
+L:Şikayet Et$
+L:Takip Et$
+

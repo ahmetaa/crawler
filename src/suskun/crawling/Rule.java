@@ -1,4 +1,4 @@
-package kdtm.crawling;
+package suskun.crawling;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

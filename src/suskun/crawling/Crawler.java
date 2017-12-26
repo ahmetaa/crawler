@@ -1,4 +1,4 @@
-package kdtm.crawling;
+package suskun.crawling;
 
 import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
@@ -41,7 +41,7 @@ public class Crawler extends WebCrawler {
         }
     }
 
-    ContentPatterns getPatternsIfContains(String domain) {
+    public static ContentPatterns getPatternsIfContains(String domain) {
         domain = domain.replaceAll("www\\.|http://|https://", "").toLowerCase(Locale.ENGLISH);
         for (String s : patternsMap.keySet()) {
             s = s.toLowerCase();
