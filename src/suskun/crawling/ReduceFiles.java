@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import com.google.common.collect.Lists;
 import suskun.extractor.ContentPatterns;
 import zemberek.core.logging.Log;
 import zemberek.core.text.Regexps;
@@ -108,9 +109,16 @@ public class ReduceFiles {
     }
 
     public static void main(String[] args) throws IOException {
-        Path root = Paths.get("/media/aaa/Data/crawl/news/");
-        Path out = Paths.get("/media/aaa/Data/crawl/reduced/");
-        moveUnnecessaryFiles(root, out, "www.dunya.com", false);
+        Path root = Paths.get("/media/aaa/Data/crawl/forum-tr/");
+        Path out = Paths.get("/media/aaa/Data/crawl/reduced-forum-tr/");
+
+        List<Path> sourceDirs = Lists.newArrayList(Files.walk(root, 1)
+                .filter(path -> path.toFile().isDirectory() && !path.equals(root)).iterator());
+
+        for (Path sourceDir : sourceDirs) {
+            moveUnnecessaryFiles(root, out, sourceDir.toFile().getName(), true);
+        }
+
     }
 
 }

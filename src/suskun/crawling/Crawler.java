@@ -28,7 +28,8 @@ import java.util.regex.Pattern;
 
 public class Crawler extends WebCrawler {
 
-    private static final Pattern FILTERS = Pattern.compile(".*(\\.(css|js|gif|jpg|png|mp3|mp3|zip|gz))$");
+    private static final Pattern FILTERS = Pattern.compile(".*(\\.(css|js|gif|jpg|png|mp3|zip|gz|xls))$");
+
     private Path root;
 
     static Map<String, ContentPatterns> patternsMap = new HashMap<>();

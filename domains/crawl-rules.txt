@@ -17,6 +17,7 @@ global
 I-:video
 I-:galeri
 I-:foto-haber
+I-:foto-galeri
 I-:fotohaber
 I-:banner
 I-:button
@@ -42,6 +43,7 @@ I-:printpage
 I-:search\.php
 I-:newreply\.php
 I-:nick=
+I-:günün-karikatürü
 I-:/etiket/
 
 L:devamını okumak için lütfen tıklayın
@@ -84,6 +86,8 @@ I-:haberakademisi
 I-:infografik
 I-:[^ ]+\.aa
 
+www.internethaber.com
+
 www.aksam.com.tr
 
 www.cnnturk.com
@@ -101,6 +105,11 @@ E:ARTICLE
 LABEL:(<div class="tags">)(.+?)(</div>)
 I-:i\.dunya\.com
 I-:m\.dunya\.com
+I-:meteoroloji
+I-:ajax-nc
+I-:abone-ol
+I-:abone-giris
+I-:landing
 
 www.ensonhaber.com
 
@@ -131,8 +140,17 @@ LABEL:(<p>Etiketler:)(.+?)(</div>)
 I-:foto-
 I-:etiket-
 I-:/amp/
+I-:track\.php
 
 www.karar.com
+
+www.mynet.com
+I-:widget
+I-:email
+I-:mobil\.
+I-:m\.mynet
+I-:my\.mynet
+I-:cevaplar/
 
 www.milliyet.com.tr
 I-:ilan-detay
@@ -382,6 +400,8 @@ forum.memurlar.net
 E:EVERYTHING
 I-:uye.memurlar.net
 I-:kategori
+I-:/arama/
+I-:/yazar/
 L:&#
 L:\(Bkz
 L:\(bkz\:
@@ -737,6 +757,7 @@ I-:forumdisplay
 I-:en\.hukuki\.net
 I-:/haber/
 I-:law\.hukuki
+I-:language=en
 I-:yabanci\.hukuki
 I-:/links/
 L:[<]|[>]
@@ -778,6 +799,8 @@ I-:uludagsozluk.com/e/
 I-:uludagsozluk.com/ses/
 I-:uludagsozluk.com/v/
 I-:nickimde-degilsiniz\.uludagsozluk
+I-:günün-karikatürü
+I-:gecenin-gif
 L:[0-9]+ entry
 L:bkz:
 L:^\.\.\.
@@ -877,3 +900,12 @@ L:Facebook'ta Paylaş
 L:Şikayet Et$
 L:Takip Et$
 
+www.aljazeera.com.tr
+I-:mobile\.aljazeera
+I-:page=[0-9]+$
+
+www.trthaber.com
+
+www.bbc.com/turkce
+I+:www.bbc.com/turkce
+I-:www.bbc.com/[^t][^u][^r]
