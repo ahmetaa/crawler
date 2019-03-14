@@ -151,6 +151,8 @@ I-:mobil\.
 I-:m\.mynet
 I-:my\.mynet
 I-:cevaplar/
+I-:fesmekan\.
+I-:sinema\.
 
 www.milliyet.com.tr
 I-:ilan-detay
